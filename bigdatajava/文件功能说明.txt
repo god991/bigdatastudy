@@ -1,0 +1,2 @@
+1.dao层使用ImpalaDao接口创建了一个通用接口层，上层service只需要调用通用接口，并传输sql语句即可执行查询。
+2.ImpalaDaoImpl实现具体查询方法，从数据库查出结果后，使用JAVA的CLASS将RS转换为java对象，并返回给上层调用。

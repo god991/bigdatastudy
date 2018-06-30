@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../jslib/comm/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../jslib/comm/echarts.min.js" ></script>
+        <script>
+            $(function(){
+                setEchartData();
+            });
+
+            url="/user/getTerCount";
+            function setEchartData(){
+                $.getJSON(url, function(result) { //返回的是json数组
+                    if (result) {
+                        var xarr = [];
+                        var yarr1 = [];
+                        $.each(result, function(i, field){
+                            xarr.push(field.terminal_brand);
+                            yarr1.push(field.counts);
+                        });
+                        //myChart.hideLoading();
+                        option.xAxis[0].data=xarr;
+                        option.series[0].data=yarr1;
+                        //option.series[1].data=yarr2;
+                        myChart.setOption(option);
+                        }
+                    else
+                        alert(result);
+                });
+            };
+
+
+        </script>
+	</head>
+	<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="content" style="width: 1000px;height:400px;"></div>
+
+    <button onclick="setEchartData()">获取数据！</button>
+
+    <!--  echar init -->
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('content'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data:['终端数量']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['1月','2月','3月'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '终端数量',
+                    min: 0,
+                    //max: 1000,
+                    //interval: 5,
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name:'终端数量',
+                    type:'bar',
+                    data:[]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        //myChart.showLoading(); //loading动画
+    </script>
+
+	</body>
+</html>
+
+
+

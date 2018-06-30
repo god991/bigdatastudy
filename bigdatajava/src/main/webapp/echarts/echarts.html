@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../jslib/comm/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../jslib/comm/echarts.min.js" ></script>
+        <script>
+            $(function(){
+                setEchartData();
+            });
+
+            url="/showAll";
+            function setEchartData(){
+                $.getJSON(url, function(result) { //返回的是json数组
+                    if (result) {
+                        var xarr = [];
+                        var yarr1 = [];
+                        var yarr2 = [];
+                        $.each(result, function(i, field){
+                            xarr.push(field.id);
+                            yarr1.push(field.price);
+                            yarr2.push(field.count);
+                        });
+                        //myChart.hideLoading();
+                        option.xAxis[0].data=xarr;
+                        option.series[0].data=yarr1;
+                        option.series[1].data=yarr2;
+                        myChart.setOption(option);
+                        }
+                    else
+                        alert(result);
+                });
+            };
+
+
+        </script>
+	</head>
+	<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="content" style="width: 600px;height:400px;"></div>
+
+    <button onclick="setEchartData()">获取数据！</button>
+
+    <!--  echar init -->
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('content'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data:['蒸发量','平均温度']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['1月','2月','3月'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '水量',
+                    min: 0,
+                    max: 100,
+                    interval: 5,
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '温度',
+                    min: 0,
+                    max: 100,
+                    interval: 5,
+
+                }
+            ],
+            series: [
+                {
+                    name:'蒸发量',
+                    type:'bar',
+                    data:[]
+                },
+                {
+                    name:'平均温度',
+                    type:'line',
+                    yAxisIndex: 1,
+                    data:[]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        //myChart.showLoading(); //loading动画
+    </script>
+
+	</body>
+</html>
+
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../jslib/comm/jquery-3.3.1.min.js"></script>
+		<!--  echar init -->
+	    <script type="text/javascript" src="../jslib/comm/echarts.min.js" ></script>
+		<script type="text/javascript" src="../jslib/comm/bmap.min.js" ></script>
+		<script type="text/javascript" src="../jslib/comm/echarts-gl.min.js" ></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hYCENCEx1nXO0Nt46ldexfG9oI49xBGh"></script>
+
+ 		<style type="text/css">
+			.nbrDivClass{
+				#position:absolute;
+				margin-top: 20px;
+				height: 150px;
+				border: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body>
+	<table>
+		<tr>
+			<td align="center">
+				手机号：<input type="text" value="15802550169" id="acc_nbr">
+				开始日期：<input type="text" value="2010-04-01" id="stdate">
+				结束日期：<input type="text" value="2010-05-01" id="enddate">
+				<br><input type="button" value="搜索手机号" onclick="searchNbr()"/>
+				<input type="button" value="查询出行轨迹" onclick="searchGPS()"/>
+				<div id="nbrDiv" class="nbrDivClass" style="display: none"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>echarts:
+				<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+				<div id="content" style="width: 800px;height:600px;"></div>
+			</td>
+		</tr>
+	</table>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="../jslib/echarts/UserGPS.js"></script>
+
+
+
+
+
